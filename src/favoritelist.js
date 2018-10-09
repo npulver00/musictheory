@@ -15,3 +15,4 @@ render(){
 }
 
 export default favoritelist;
+

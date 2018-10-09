@@ -1,36 +1,48 @@
-import React, { Component } from "react";
+// import React, { Component } from "react";
+// import axios from "axios";
 
-class inputsChords extends Component{
 
-    constructor(){
-       super();
-       this.state = {
-        chords: [],
-        genre: [],
-        artisits: []
-       }
-       
+// class inputsNewPextends Component{
+
+//     constructor(){
+//        super();
+//        this.state = {
+//         newPhrase: [],
+//         text:""
+//        };    
+//     }
     
-    }
+                    
+//     inputPhrase(val){
+//         this.setState({ text: val }); 
+//         }
 
-    render() {
-        const { text } = this.state;
-      
-        return(
+//     updateChord(){
+//         axios.get(baseUrl, {
+//         }).then(response =>{
+//             console.log(response)
+//             this.setState({newPhrase:response.data});
+//         })
+//     }
+//     render() {
+//       const { text } = this.state;
+//       const displayChords = this.state.newPhrase.map(function(notes){
+//           return <p> {notes}</p>
+//       })
+//         return(
            
-            <div>
-                {/* input box and button for chords */}
-                <h4>inputsChords</h4>
-                <input className ="chooseChords" 
-                placeholder = "E#_Bb_F"
-                value = {text} onChange = {(event) => this.chooseChords(event.target.value)} />
-                <button onClick={(event)=> this.updateChord(event.target.value)}>Key!</button>/>
- 
+//             <div>
+//                 <h4>Chord Selection</h4>
+//                 <input className ="Choose a word" 
+//                 placeholder = "words of wisdom"
+//                 value = {text} onChange = {(event) => this.chooseLyric(event.target.value)} />
+//                 <button onClick={()=> this.updateChord()}>Wisdom</button>
+//                 {displayChords}
                
-            </div>
+//             </div>
           
-        )
-    }
-}
+//         )
+//     }
+// }
 
-export default inputsChords;
+// export default inputsChords;

@@ -1,35 +1,90 @@
 import React, { Component } from 'react';
 import './App.css';
-import inputsChords from './inputsChords';
-import synposis from './synposis.js';
-import songlist from  './songlist.js';
-import favoritelist from './favoritelist.js';
+import InputPhrase from './InputPhrase';
+import clouds from './image/clouds.jpg';
 import axios from 'axios';
+import Header from './Header';
+import Weather from './weather';
+
+
 
 class App extends Component {
   constructor(){
     super();
     this.state ={
-      fortune: " Awaiting your orders..."
+      phrase: [],
+      type: '',
+      editinput: ""
     }
   }
-  fetchData(){
-    axios.get('/data').then(res => {
-      this.setState({
-        fortune: res.data
-      })
+
+  componentDidMount(){
+  axios.get('/api/peacefulQuotes').then(response => {
+    this.setState({phrase:response.data})
+   })
+  }
+
+  grabData(){
+    axios.get('/api/peacefulQuotes').then(response => {
+      console.log(response)
+      this.setState({ phrase: response.data})
     })
   }
 
+  deleteQuote(id){
+        axios.delete(`/api/peacefulQuotes/${id}`).then( response =>{
+          console.log(id)
+          this.setState({phrase:response.data})
+      })
+    }
+
+  editQuote(id, quote){
+    console.log('editQuote:',quote)
+     axios.put(`/api/peacefulQuotes/${id}`, {quote}).then(response => {
+         this.setState({phrase:[response.data]})
+          
+     })
+  }
+
+ inputComment(value){
+  this.setState({editinput:value})
+}
+ 
   render() {
-    return (
+    console.log(this.state)
+    let phraseToDisplay = this.state.phrase.map((element, index) => {
+      return (
+        <div key = {index}>{element.quote} 
+        <div>
+          <br/>      
+        </div>
+        <button className = "editButton" onClick={()=>this.editQuote(element.id, this.state.editinput) }>Edit Quote</button>
+        <input className ="inputEdit" placeholder ="edit" onChange={(event) => this.inputComment(event.target.value)}></input>
+        <button className = "eraseButton" onClick={()=>this.deleteQuote(element.id) }>Delete</button>
+        </div>
+      )
+    })
+    let type = ""
+      return (
       <div>
-          <inputsChords ref = "inputsChords"/>
-          <h1>Tell me my fortune</h1>
-          <button onClick={() => this.fetchData()}> Fetch Fortune</button>
-          <p> {this.state.fortune} </p>
+        
+        <Header/>
+        <div className="main-container">
+           
+          <div className ="inner-wrapper">
+
+            <div className="quote-wrapper">
+               {phraseToDisplay} 
+            </div>
+              <button onClick={() => this.grabData()} className="quote-button"> Quote </button>       
+              <InputPhrase/>
+              <Weather/>
+          </div>
+              
+        </div> 
+      
       </div>
-    )
+    );
   }
 }
 
